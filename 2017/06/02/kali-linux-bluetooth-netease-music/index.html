@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Lou&#39;s blog">
+  <meta name="keyword" content="louDylan, lou&#39;s blog">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Kali-Linux 安装驱动并使用 Blueman 连接蓝牙耳机 | Lou&#39;s blog
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-58DK153HYF"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-58DK153HYF');
+    </script>
+
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Lou's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">专题</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">时间线</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw" style="color: #34495E;"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">首页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">专题</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">时间线</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search" style="color: #34495E;"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Kali-Linux 安装驱动并使用 Blueman 连接蓝牙耳机</h2>
+  <p class="post-date">2017-06-02</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="1-安装蓝牙驱动"><a href="#1-安装蓝牙驱动" class="headerlink" title="1.安装蓝牙驱动"></a>1.安装蓝牙驱动</h2><p>我使用的是台式机+蓝牙控制器，首先需要安装蓝牙驱动，否则开机会报错(最后一行)：</p>
+<p><img src="http://images2015.cnblogs.com/blog/866825/201706/866825-20170602155643008-1958706418.jpg"></p>
+<p>bluetooth hci0: firmware: failed to load brcm&#x2F;BCM20702A1-0a5c-21ec.hcd (-2)</p>
+<p>根据错误信息，上网搜索对应的蓝牙驱动，我在GitHub上找到了这个<a target="_blank" rel="noopener" href="https://github.com/winterheart/broadcom-bt-firmware/blob/master/brcm/BCM20702A1-0a5c-21ec.hcd">BCM20702A1-0a5c-21ec.hcd</a>驱动，下载后放到 &#x2F;lib&#x2F;firmware&#x2F;brcm 目录下，重启即可加载。</p>
+<h2 id="2-安装Blueman"><a href="#2-安装Blueman" class="headerlink" title="2.安装Blueman"></a>2.安装Blueman</h2><p>启动dbus和蓝牙服务(使用service或&#x2F;etc&#x2F;init.d&#x2F;均可)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service dbus start</span><br><span class="line">/etc/init.d/bluetooth start</span><br></pre></td></tr></table></figure>
+
+<p>Blueman是个非常方便的图形化蓝牙管理软件，使用apt-get可以直接安装它：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install blueman</span><br></pre></td></tr></table></figure>
+<p>完成后左下角会出现蓝牙图标（也可使用blueman-applet手动启动）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install pulseaudio pulseaudio-module-bluetooth pavucontrol bluez-firmware</span><br></pre></td></tr></table></figure>
+
+<p>安装音频相关模块，如果缺少这些模块的话，连接耳机将会出现<br> blueman.bluez.errors.DBusFailedError: Resource temporarily unavailable 的错误信息。</p>
+<p><img src="http://images2015.cnblogs.com/blog/866825/201706/866825-20170602155720493-1374962365.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service bluetooth restart</span><br><span class="line">killall pulseaudio</span><br></pre></td></tr></table></figure>
+<p>重启完蓝牙服务，这时候就可以与蓝牙耳机配对了，不过音质很差，需要在音频配置里选择高保真回放（A2DP信宿），如果报错的话，则还需要对配置文件进行一些修改。</p>
+<h2 id="A2DP出错解决方案："><a href="#A2DP出错解决方案：" class="headerlink" title="A2DP出错解决方案："></a>A2DP出错解决方案：</h2><p>如果安装了模块，但是 pactl load-module module-bluetooth-discover 加载不了模块的话，需要手动修改一下配置。<br>参考<a target="_blank" rel="noopener" href="https://bbs.archlinux.org/viewtopic.php?id=194006">A2DP Bluetooth headset issues with PulseAudio 6.0</a><br>帖子中17楼的做法：</p>
+<p>1.编辑 &#x2F;etc&#x2F;pulse&#x2F;default.pa 文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/pulse/default.pa</span><br></pre></td></tr></table></figure>
+<p>2.找到load-module module-bluetooth-discover 并在前面加#将它注释掉：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># load-module module-bluetooth-discover</span><br></pre></td></tr></table></figure>
+
+<p>3.编辑 &#x2F;usr&#x2F;bin&#x2F;start-pulseaudio-x11 文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/bin/start-pulseaudio-x11</span><br></pre></td></tr></table></figure>
+<p>找到下面的代码，并在它下面另其一行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ x”$SESSION_MANAGER” != x ] ; then</span><br><span class="line">     /usr/bin/pactl load-module module-x11-xsmp “display=$DISPLAY session_manager=$SESSION_MANAGER” &gt; /dev/null</span><br><span class="line"> fi</span><br></pre></td></tr></table></figure>
+<p>在它下面写入(两个fi中间) &#x2F;usr&#x2F;bin&#x2F;pactl load-module module-bluetooth-discover，完整如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if [ x”$SESSION_MANAGER” != x ] ; then</span><br><span class="line">     /usr/bin/pactl load-module module-x11-xsmp “display=$DISPLAY session_manager=$SESSION_MANAGER” &gt; /dev/null</span><br><span class="line"> fi</span><br><span class="line">     /usr/bin/pactl load-module module-bluetooth-discover</span><br><span class="line"> fi</span><br></pre></td></tr></table></figure>
+
+<p>重启服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service bluetooth restart</span><br><span class="line">sudo pkill pulseaudio</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://images2015.cnblogs.com/blog/866825/201706/866825-20170602160013211-54447082.png"></p>
+<p><img src="http://images2015.cnblogs.com/blog/866825/201706/866825-20170602160031868-239402414.png"></p>
+<p>这时候就可以在音频配置里选择A2DP了，音质瞬间变好了很多。</p>
+<h2 id="Protocol-not-available错误解决方案："><a href="#Protocol-not-available错误解决方案：" class="headerlink" title="Protocol not available错误解决方案："></a>Protocol not available错误解决方案：</h2><p>输入命令加载module-bluetooth-discover模块即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pactl load-module module-bluetooth-discover</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><hr>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://askubuntu.com/questions/801404/bluetooth-connection-failed-blueman-bluez-errors-dbusfailederror-protocol-no">Ask Ubuntu</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/blueman-project/blueman/issues/547">Github</a></li>
+<li><a target="_blank" rel="noopener" href="https://bbs.archlinux.org/viewtopic.php?id=194006">arch linux</a></li>
+<li><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Bluetooth_headset">arch linux</a></li>
+</ul>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- licenses START -->
+    
+      <div class="licenses">
+        <figcaption>本文采用 <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0 许可协议</a>，转载请注明<a rel="article" href="http://loudylan.me/2017/06/02/kali-linux-bluetooth-netease-music/">出处</a>。</figcaption>
+      </div>
+    
+    <!-- licenses END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2017/04/10/mac-install-maven%20copy/">
+        <span class="nav-arrow">← </span>
+        
+          macOS 安装 Maven
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2021/06/13/kali-linux-disable-rgb-nzxt-cam/">
+        
+          Linux 下控制 NZXT H700 机箱，关闭灯光污染
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo=""
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-%E5%AE%89%E8%A3%85%E8%93%9D%E7%89%99%E9%A9%B1%E5%8A%A8"><span class="toc-nav-text">1.安装蓝牙驱动</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-%E5%AE%89%E8%A3%85Blueman"><span class="toc-nav-text">2.安装Blueman</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#A2DP%E5%87%BA%E9%94%99%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="toc-nav-text">A2DP出错解决方案：</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Protocol-not-available%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="toc-nav-text">Protocol not available错误解决方案：</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-nav-text">参考资料</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://loudylan.me/2017/06/02/kali-linux-bluetooth-netease-music/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2025 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> with <a target="_blank" rel="noopener" href="https://github.com/yanm1ng/hexo-theme-vexo">Vexo</a>
+    
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>
